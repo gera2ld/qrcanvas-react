@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Build QRCode with ReactJS</title>
+  <script src="../node_modules/systemjs/dist/system.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    const process = {env: {}};
+    System.config({
+      map: {
+        react: '../node_modules/react',
+        'react-dom': '../node_modules/react-dom',
+        'object-assign': '../node_modules/object-assign',
+        fbjs: '../node_modules/fbjs',
+        jsqrgen: '../node_modules/jsqrgen', 
+        'jsqrgen-react': '..',
+      }, 
+      packages: {
+        fbjs: {defaultExtension: 'js'},
+        react: {main: 'react.js'},
+        'react-dom': {main: 'index.js'},
+        'object-assign': {main: 'index.js'},
+        jsqrgen: {main: 'dist/qrgen.js'},
+        'jsqrgen-react': {main: 'index.js'},
+      },
+    });
+    System.import('./app.js');
+  </script>
+</body>
+</html>
