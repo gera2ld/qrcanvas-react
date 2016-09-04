@@ -1,6 +1,6 @@
 {
   "name": "jsqrgen-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A QRCode component for use with ReactJS",
   "main": "index.js",
   "scripts": {
