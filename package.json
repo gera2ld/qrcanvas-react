@@ -1,0 +1,23 @@
+{
+  "name": "qrcanvas-react",
+  "version": "1.0.0",
+  "description": "A QRCode component for use with ReactJS",
+  "main": "index.js",
+  "keywords": [
+    "qrcode",
+    "qrcanvas",
+    "react"
+  ],
+  "author": "Gerald <i@gerald.top>",
+  "license": "ISC",
+  "dependencies": {
+    "qrcanvas": "1"
+  },
+  "peerDependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "systemjs": "^0.19.37"
+  }
+}
