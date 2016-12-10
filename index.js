@@ -19,7 +19,7 @@ module.exports = React.createClass({
   },
   renderQR(options) {
     var qroptions = {};
-    Object.keys(options).forEach(function (key) {qroptions[key] = options[key];});
+    options && Object.keys(options).forEach(function (key) {qroptions[key] = options[key];});
     qroptions.reuseCanvas = findDOMNode(this);
     qrcanvas(qroptions);
   },
