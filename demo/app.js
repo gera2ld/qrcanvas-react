@@ -2,14 +2,16 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const QRCanvas = require('qrcanvas-react');
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
+class Demo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       data: 'Hello world',
     };
-  },
+  }
+
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     return React.createElement('div', null, [
       React.createElement('div', {key: 'input'}, React.createElement('input', {
         type: 'text',
@@ -21,7 +23,7 @@ const Demo = React.createClass({
         options: {data: data},
       }),
     ]);
-  },
-});
+  }
+}
 
 ReactDOM.render(React.createElement(Demo), document.getElementById('app'));

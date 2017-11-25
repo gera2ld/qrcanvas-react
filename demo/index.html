@@ -1,33 +1,28 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Build QRCode with ReactJS</title>
-  <script src="../node_modules/systemjs/dist/system.js"></script>
+<meta charset="utf-8">
+<title>Build QRCode with ReactJS</title>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="../node_modules/systemjs/dist/system.js"></script>
 </head>
 <body>
-  <div id="app"></div>
-  <script>
-    const process = {env: {}};
-    System.config({
-      map: {
-        react: '../node_modules/react',
-        'react-dom': '../node_modules/react-dom',
-        'object-assign': '../node_modules/object-assign',
-        fbjs: '../node_modules/fbjs',
-        qrcanvas: '../node_modules/qrcanvas', 
-        'qrcanvas-react': '..',
-      }, 
-      packages: {
-        fbjs: {defaultExtension: 'js'},
-        react: {main: 'react.js'},
-        'react-dom': {main: 'index.js'},
-        'object-assign': {main: 'index.js'},
-        qrcanvas: {main: 'dist/qrcanvas.js'},
-        'qrcanvas-react': {main: 'index.js'},
-      },
-    });
-    System.import('./app.js');
-  </script>
+<div id="app"></div>
+<script>
+System.config({
+  map: {
+    qrcanvas: '../node_modules/qrcanvas',
+    'qrcanvas-react': '..',
+  },
+  packages: {
+    qrcanvas: {main: 'dist/qrcanvas.js'},
+    'qrcanvas-react': {main: 'dist/qrcanvas-react.js'},
+  },
+});
+System.set('react', System.newModule(React));
+System.set('react-dom', System.newModule(ReactDOM));
+System.import('./app.js');
+</script>
 </body>
 </html>
