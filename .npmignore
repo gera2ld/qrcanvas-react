@@ -1,2 +1,5 @@
 demo
+scripts
+src
 *.log
+*.lock

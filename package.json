@@ -29,5 +29,6 @@
     "rollup": "^0.51.8",
     "rollup-plugin-babel": "^3.0.2",
     "systemjs": "^0.20.19"
-  }
+  },
+  "repository": "git@github.com:gera2ld/qrcanvas-react.git"
 }
