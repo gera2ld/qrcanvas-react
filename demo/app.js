@@ -33,7 +33,7 @@ const preparing = initialize();
 window.addEventListener('hashchange', handleHashChange, false);
 handleHashChange();
 
-// FallbackJs.ok();
+FallbackJs.ok();
 
 function initialize() {
   return loadModule('qrcanvas-react', 'https://unpkg.com/qrcanvas-react');
@@ -82,10 +82,9 @@ function showDemo(item) {
         className: 'my-2 text-center',
       }),
       createElement('pre', {
-        className: 'language-js',
+        className: 'code',
       }, [
         createElement('code', {
-          className: 'language-js',
           innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
         }),
       ]),

@@ -16,7 +16,7 @@
 <div class="container" id="root">
   <div class="d-flex" style="height:100vh">
     <div class="d-flex flex-column">
-      <a href="..">
+      <a href="#">
         <h2>qrcanvas-react</h2>
       </a>
       <ul class="menu menu-nav flex-auto" id="menu"></ul>
@@ -27,6 +27,54 @@
     <div id="content"></div>
   </div>
 </div>
+<div class="container" id="fallback-js" style="display:none" data-hide="#root">
+  <h1>Oops</h1>
+  <p>Unfortunately, your browser is too old to work for this application. Please upgrade your browser.</p>
+  <dl></dl>
+</div>
+<script>
+window._fallbackJs = {
+  onError: function (errors) {
+    var dl = document.querySelector('#fallback-js>dl');
+    errors.forEach(function (item) {
+      var message = item.message;
+      var source = item.source;
+      var stack = item.stack;
+      dl.appendChild(createElement('dt', {
+        textContent: message,
+      }));
+      dl.appendChild(createElement('dd', null, [
+        createElement('div', {
+          textContent: source,
+        }),
+        stack && createElement('pre', {
+          className: 'code',
+        }, [
+          createElement('code', {
+            textContent: stack,
+          }),
+        ]),
+      ]));
+    });
+    _hmt.push(['_trackEvent', 'error', 'load', errors.map(function (item) { return item.message; }).join(';')]);
+    function createElement(tag, props, children) {
+      var el = document.createElement(tag);
+      if (props) {
+        Object.keys(props).forEach(function (key) {
+          el[key] = props[key];
+        });
+      }
+      if (children) {
+        children.forEach(function (child) {
+          if (child) el.appendChild(child);
+        });
+      }
+      return el;
+    }
+  },
+};
+</script>
+<script src="https://unpkg.com/@gera2ld/fallback-js@0.1.0/dist/index.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
