@@ -4,7 +4,8 @@
   "description": "A QRCode component for use with ReactJS",
   "main": "dist/qrcanvas-react.js",
   "scripts": {
-    "build": "node scripts/build"
+    "build": "node scripts/build",
+    "deploy": "sh scripts/build-gh.sh"
   },
   "keywords": [
     "qrcode",
@@ -21,14 +22,13 @@
     "react-dom": "*"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "rollup": "^0.51.8",
-    "rollup-plugin-babel": "^3.0.2",
-    "systemjs": "^0.20.19"
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4"
   },
   "repository": "git@github.com:gera2ld/qrcanvas-react.git"
 }

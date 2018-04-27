@@ -11,7 +11,7 @@ Install
 ---
 
 ``` sh
-$ npm i qrcanvas-react
+$ yarn add qrcanvas-react
 ```
 
 Usage
@@ -21,9 +21,10 @@ Usage
 import QRCanvas from 'qrcanvas-react';
 import ReactDOM from 'react-dom';
 
-const options = {data: 'hello, world'};
+const options = { data: 'hello, world' };
 ReactDOM.render(<QRCanvas options={options} />, document.getElementById('app'));
 ```
 
-`options` is passed to [qrcanvas](https://github.com/gera2ld/qrcanvas).
-For more details, see [qrcanvas docs](https://github.com/gera2ld/qrcanvas/wiki).
+`options` is passed to [qrcanvas](https://github.com/gera2ld/qrcanvas). For more details, see [qrcanvas docs](https://github.com/gera2ld/qrcanvas/wiki).
+
+See [more examples](https://gera2ld.github.io/qrcanvas-react/).

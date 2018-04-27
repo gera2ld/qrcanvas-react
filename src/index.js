@@ -1,5 +1,4 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 import qrcanvas from 'qrcanvas';
 
 export default class App extends React.Component {
@@ -14,14 +13,19 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <canvas />;
+    return <canvas ref={this.onBind} />;
+  }
+
+  onBind = canvas => {
+    this.canvas = canvas;
   }
 
   update(options) {
-    const qrOptions = {
-      ...options,
-      canvas: findDOMNode(this),
-    };
-    qrcanvas(qrOptions);
+    if (this.canvas) {
+      qrcanvas({
+        ...options,
+        canvas: this.canvas,
+      });
+    }
   }
 }

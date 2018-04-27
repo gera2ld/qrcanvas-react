@@ -3,26 +3,30 @@
 <head>
 <meta charset="utf-8">
 <title>Build QRCode with ReactJS</title>
-<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-<script src="../node_modules/systemjs/dist/system.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/spectre.css@0.5.1/docs/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/prismjs/themes/prism.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/prismjs@1.14.0/prism.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/qrcanvas/dist/qrcanvas.js"></script>
 </head>
 <body>
-<div id="app"></div>
-<script>
-System.config({
-  map: {
-    qrcanvas: '../node_modules/qrcanvas',
-    'qrcanvas-react': '..',
-  },
-  packages: {
-    qrcanvas: {main: 'dist/qrcanvas.js'},
-    'qrcanvas-react': {main: 'dist/qrcanvas-react.js'},
-  },
-});
-System.set('react', System.newModule(React));
-System.set('react-dom', System.newModule(ReactDOM));
-System.import('./app.js');
-</script>
+<div class="container" id="root">
+  <div class="d-flex" style="height:100vh">
+    <div class="d-flex flex-column">
+      <a href="..">
+        <h2>qrcanvas-react</h2>
+      </a>
+      <ul class="menu menu-nav flex-auto" id="menu"></ul>
+      <footer class="ml-2">
+        <p>Designed with &hearts; by <a href="https://gerald.top">Gerald</a></p>
+      </footer>
+    </div>
+    <div id="content"></div>
+  </div>
+</div>
+<script src="app.js"></script>
 </body>
 </html>

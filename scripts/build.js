@@ -2,9 +2,6 @@ const rollup = require('rollup');
 const babel = require('rollup-plugin-babel');
 
 const rollupOptions = {
-  input: 'src/index.js',
-  file: 'dist/qrcanvas-react.js',
-  format: 'cjs',
   plugins: [
     babel({
       presets: [
@@ -27,6 +24,11 @@ const rollupOptions = {
   ],
 };
 
-rollup.rollup(rollupOptions)
-.then(bundle => bundle.write(rollupOptions))
+rollup.rollup(Object.assign({
+  input: 'src/index.js',
+}, rollupOptions))
+.then(bundle => bundle.write({
+  file: 'dist/qrcanvas-react.js',
+  format: 'cjs',
+}))
 .catch(err => console.error(err));
