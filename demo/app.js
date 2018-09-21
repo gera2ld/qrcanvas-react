@@ -28,17 +28,15 @@ const modules = {
   qrcanvas: {
     exports: qrcanvas,
   },
+  'qrcanvas-react': {
+    exports: qrcanvas.react,
+  },
 };
 
-const preparing = initialize();
 window.addEventListener('hashchange', handleHashChange, false);
 handleHashChange();
 
 FallbackJs.ok();
-
-function initialize() {
-  return loadModule('qrcanvas-react', 'https://unpkg.com/qrcanvas-react');
-}
 
 function requireModule(name) {
   const module = modules[name];
@@ -46,17 +44,19 @@ function requireModule(name) {
   return module.exports;
 }
 
-function loadModule(name, url) {
-  return fetch(url)
-  .then(res => res.text())
-  .then(code => {
-    const fn = new Function('require', 'module', 'exports', code);
-    const module = {
-      exports: {},
-    };
-    fn(requireModule, module, module.exports);
-    modules[name] = module;
-  });
+async function downloadUrl(url) {
+  const res = await fetch(url);
+  return res.text();
+}
+
+async function loadModule(name, url) {
+  const code = await downloadUrl(url);
+  const fn = new Function('require', 'module', 'exports', code);
+  const module = {
+    exports: {},
+  };
+  fn(requireModule, module, module.exports);
+  modules[name] = module;
 }
 
 function handleHashChange() {
@@ -65,54 +65,47 @@ function handleHashChange() {
   showDemo(item);
 }
 
-function showDemo(item) {
+async function showDemo(demo) {
   if (active) active.el.classList.remove('active');
-  active = item;
+  active = demo;
   active.el.classList.add('active');
   content.innerHTML = LOADER;
-  Promise.all([
-    loadResource(item),
-    preparing,
-  ])
-  .then(([item]) => {
-    content.innerHTML = '';
-    let container;
-    content.append(
-      createElement('h3', { textContent: item.name }),
-      container = createElement('div', {
-        className: 'my-2 text-center',
+  const item = await loadResource(demo);
+  content.innerHTML = '';
+  let container;
+  content.append(
+    createElement('h3', { textContent: item.name }),
+    container = createElement('div', {
+      className: 'my-2 text-center',
+    }),
+    createElement('pre', {
+      className: 'code',
+    }, [
+      createElement('code', {
+        innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
       }),
-      createElement('pre', {
-        className: 'code',
-      }, [
-        createElement('code', {
-          innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
-        }),
-      ]),
-    );
-    const fn = new Function('require', 'module', 'exports', item.code);
-    const module = {
-      exports: {},
-    };
-    fn(requireModule, module, module.exports);
-    ReactDOM.render(React.createElement(module.exports.default || module.exports), container);
-  });
+    ]),
+  );
+  const fn = new Function('require', 'module', 'exports', item.code);
+  const module = {
+    exports: {},
+  };
+  fn(requireModule, module, module.exports);
+  ReactDOM.render(React.createElement(module.exports.default || module.exports), container);
 }
 
-function loadResource(item) {
-  if (item.code) return Promise.resolve(item);
-  return fetch(`data/${item.path}.js`).then(res => res.text())
-  .then(source => {
-    item.source = source;
-    item.code = Babel.transform(source, {
-      presets: [
-        'es2015',
-        'react',
-        ['stage-2', { decoratorsLegacy: true }],
-      ],
-    }).code;
-    return item;
-  });
+async function loadResource(item) {
+  if (item.code) return item;
+  const source = await downloadUrl(`data/${item.path}.js`);
+  item.source = source;
+  item.code = Babel.transform(source, {
+    presets: [
+      'es2015',
+      'react',
+      ['stage-2', { decoratorsLegacy: true }],
+    ],
+  }).code;
+  return item;
 }
 
 function $(selector) {

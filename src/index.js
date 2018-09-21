@@ -1,15 +1,14 @@
+// eslint-disable-next-line
 import React from 'react';
-import qrcanvas from 'qrcanvas';
+import { qrcanvas } from 'qrcanvas';
 
 export default class App extends React.Component {
   componentDidMount() {
-    this.update(this.props.options);
+    this.update();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.options !== nextProps.options) {
-      this.update(nextProps.options);
-    }
+  componentDidUpdate() {
+    this.update();
   }
 
   render() {
@@ -20,7 +19,8 @@ export default class App extends React.Component {
     this.canvas = canvas;
   }
 
-  update(options) {
+  update() {
+    const { options } = this.props;
     if (this.canvas) {
       qrcanvas({
         ...options,
