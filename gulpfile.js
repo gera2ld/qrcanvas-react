@@ -3,70 +3,48 @@ const gulp = require('gulp');
 const log = require('fancy-log');
 const rollup = require('rollup');
 const del = require('del');
-const babel = require('rollup-plugin-babel');
-const replace = require('rollup-plugin-replace');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
 const { uglify } = require('rollup-plugin-uglify');
-const pkg = require('./package.json');
+const { getRollupPlugins, getExternal } = require('./scripts/util');
 
 const DIST = 'lib';
-const IS_PROD = process.env.NODE_ENV === 'production';
-const values = {
-  'process.env.VERSION': pkg.version,
-  'process.env.NODE_ENV': process.env.NODE_ENV || 'development',
-};
+const FILENAME = 'qrcanvas-react';
 
-const getRollupPlugins = ({ babelConfig, browser } = {}) => [
-  babel({
-    exclude: 'node_modules/**',
-    ...browser ? {
-      // Combine all helpers at the top of the bundle
-      externalHelpers: true,
-    } : {
-      // Require helpers from '@babel/runtime'
-      runtimeHelpers: true,
-      plugins: [
-        '@babel/plugin-transform-runtime',
-      ],
-    },
-    ...babelConfig,
-  }),
-  replace({ values }),
-  resolve(),
-  commonjs(),
-];
-const getExternal = (externals = []) => id => {
-  return id.startsWith('@babel/runtime/') || externals.includes(id);
-};
-
+const external = getExternal([
+  'qrcanvas',
+  'react',
+]);
 const rollupConfig = [
   {
     input: {
-      input: 'src/index.js',
+      input: 'src/index.tsx',
       plugins: getRollupPlugins(),
-      external: getExternal([
-        'qrcanvas',
-        'react',
-      ]),
+      external,
     },
     output: {
       format: 'cjs',
-      file: `${DIST}/qrcanvas-react.common.js`,
+      file: `${DIST}/${FILENAME}.common.js`,
     },
   },
   {
     input: {
-      input: 'src/index.js',
+      input: 'src/index.tsx',
+      plugins: getRollupPlugins(),
+      external,
+    },
+    output: {
+      format: 'esm',
+      file: `${DIST}/${FILENAME}.esm.js`,
+    },
+  },
+  {
+    input: {
+      input: 'src/index.tsx',
       plugins: getRollupPlugins({ browser: true }),
-      external: [
-        'qrcanvas',
-        'react',
-      ],
+      external,
     },
     output: {
       format: 'umd',
-      file: `${DIST}/qrcanvas-react.js`,
+      file: `${DIST}/${FILENAME}.js`,
       name: 'qrcanvas.react',
       globals: {
         qrcanvas: 'qrcanvas',
@@ -96,7 +74,7 @@ Array.from(rollupConfig)
 });
 
 function clean() {
-  return del(DIST);
+  return del([DIST, 'types']);
 }
 
 function buildJs() {
