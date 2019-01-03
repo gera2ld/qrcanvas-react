@@ -1,10 +1,12 @@
-import QRCanvas from 'qrcanvas-react';
+import { QRCanvas } from 'qrcanvas-react';
 
 export default function SimpleDemo(props) {
   return (
-    <QRCanvas options={{
-      cellSize: 8,
-      data: '你好',
-    }} />
+    <QRCanvas
+      options={{
+        cellSize: 8,
+        data: '你好',
+      }}
+    />
   );
 }

@@ -1,4 +1,4 @@
-import QRCanvas from 'qrcanvas-react';
+import { QRCanvas } from 'qrcanvas-react';
 
 export default class InputDemo extends React.Component {
   state = {
