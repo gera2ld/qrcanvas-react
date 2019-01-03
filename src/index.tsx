@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { qrcanvas, QRCanvasOptions } from 'qrcanvas';
 
-interface QRCanvasReactProps {
+export interface QRCanvasReactProps {
   options: QRCanvasOptions;
 }
 
-export default class QRCanvasReact extends React.Component<QRCanvasReactProps, any> {
+export class QRCanvas extends React.Component<QRCanvasReactProps, any> {
   private canvas = null;
 
   public componentDidMount() {

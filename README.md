@@ -18,7 +18,7 @@ Usage
 ---
 
 ``` javascript
-import QRCanvas from 'qrcanvas-react';
+import { QRCanvas } from 'qrcanvas-react';
 import ReactDOM from 'react-dom';
 
 const options = { data: 'hello, world' };
