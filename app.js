@@ -9,14 +9,12 @@ const demos = [
 ];
 let active;
 demos.forEach(item => {
-  menu.append(createElement('li', {
+  menu.append(JSX('li', {
     className: 'menu-item',
-  }, [
-    item.el = createElement('a', {
-      href: `#${item.path}`,
-      textContent: item.name,
-    }),
-  ]));
+  }, item.el = JSX('a', {
+    href: `#${item.path}`,
+    textContent: item.name,
+  })));
 });
 const modules = {
   react: {
@@ -74,17 +72,15 @@ async function showDemo(demo) {
   content.innerHTML = '';
   let container;
   content.append(
-    createElement('h3', { textContent: item.name }),
-    container = createElement('div', {
+    JSX('h3', { textContent: item.name }),
+    container = JSX('div', {
       className: 'my-2 text-center',
     }),
-    createElement('pre', {
+    JSX('pre', {
       className: 'code',
-    }, [
-      createElement('code', {
-        innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
-      }),
-    ]),
+    }, JSX('code', {
+      innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
+    })),
   );
   const fn = new Function('require', 'module', 'exports', item.code);
   const module = {
@@ -110,34 +106,4 @@ async function loadResource(item) {
 
 function $(selector) {
   return document.querySelector(selector);
-}
-
-function createElement(tagName, props, children) {
-  const el = document.createElement(tagName);
-  if (props) {
-    Object.keys(props).forEach(key => {
-      const value = props[key];
-      if (key === 'on') {
-        bindEvents(el, value);
-      } else {
-        el[key] = value;
-      }
-    });
-  }
-  if (children) {
-    children.forEach(child => {
-      el.append(child);
-    });
-  }
-  return el;
-}
-
-function bindEvents(el, events) {
-  if (events) {
-    Object.keys(events).forEach(type => {
-      const handle = events[type];
-      if (handle) el.addEventListener(type, handle);
-    });
-  }
-  return el;
 }
