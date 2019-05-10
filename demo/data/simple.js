@@ -1,3 +1,4 @@
+import React from 'react';
 import { QRCanvas } from 'qrcanvas-react';
 
 export default function SimpleDemo(props) {
