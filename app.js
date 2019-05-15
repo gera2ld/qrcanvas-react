@@ -7,11 +7,12 @@ const demos = [
   { name: 'Logo', path: 'logo' },
   { name: 'Unicode', path: 'unicode' },
 ];
+const { createElement } = JSX;
 let active;
 demos.forEach(item => {
-  menu.append(JSX('li', {
+  menu.append(createElement('li', {
     className: 'menu-item',
-  }, item.el = JSX('a', {
+  }, item.el = createElement('a', {
     href: `#${item.path}`,
     textContent: item.name,
   })));
@@ -72,13 +73,13 @@ async function showDemo(demo) {
   content.innerHTML = '';
   let container;
   content.append(
-    JSX('h3', { textContent: item.name }),
-    container = JSX('div', {
+    createElement('h3', { textContent: item.name }),
+    container = createElement('div', {
       className: 'my-2 text-center',
     }),
-    JSX('pre', {
+    createElement('pre', {
       className: 'code',
-    }, JSX('code', {
+    }, createElement('code', {
       innerHTML: Prism.highlight(item.source, Prism.languages.javascript),
     })),
   );
