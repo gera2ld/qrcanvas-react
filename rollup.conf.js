@@ -36,8 +36,11 @@ const rollupConfig = [
   {
     input: {
       input: 'src/index.tsx',
-      plugins: getRollupPlugins({ browser: true }),
-      external,
+      plugins: getRollupPlugins(),
+      external: [
+        'qrcanvas',
+        'react',
+      ],
     },
     output: {
       format: 'iife',
