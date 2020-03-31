@@ -25,12 +25,14 @@ export class QRCanvas extends React.Component<QRCanvasReactProps, any> {
   }
 
   public update() {
-    const { options } = this.props;
+    let { options } = this.props;
     if (this.canvas) {
-      qrcanvas({
+      options = {
         ...options,
         canvas: this.canvas,
-      });
+      };
+      if (!options.cellSize && !options.size) options.cellSize = 6;
+      qrcanvas(options);
     }
   }
 }
