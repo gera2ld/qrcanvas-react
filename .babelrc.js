@@ -1,8 +1,10 @@
 module.exports = {
   extends: require.resolve('@gera2ld/plaid/config/babelrc-base'),
   presets: [
-    '@babel/preset-typescript',
-    '@babel/preset-react',
+    ['@babel/preset-typescript', {
+      isTSX: true,
+      allExtensions: true,
+    }],
   ],
   plugins: [
     ['module-resolver', {
@@ -10,5 +12,8 @@ module.exports = {
         '#': './src',
       },
     }],
+
+    // react
+    '@babel/plugin-transform-react-jsx',
   ].filter(Boolean),
 };

@@ -1,5 +1,5 @@
 const rollup = require('rollup');
-const { uglify } = require('rollup-plugin-uglify');
+const { terser } = require('rollup-plugin-terser');
 const { getRollupPlugins, getExternal, DIST } = require('./scripts/util');
 const pkg = require('./package.json');
 
@@ -10,10 +10,14 @@ const external = getExternal([
   'qrcanvas',
   'react',
 ]);
+const bundleOptions = {
+  extend: true,
+  esModule: false,
+};
 const rollupConfig = [
   {
     input: {
-      input: 'src/index.tsx',
+      input: 'src/index.ts',
       plugins: getRollupPlugins(),
       external,
     },
@@ -24,8 +28,8 @@ const rollupConfig = [
   },
   {
     input: {
-      input: 'src/index.tsx',
-      plugins: getRollupPlugins(),
+      input: 'src/index.ts',
+      plugins: getRollupPlugins({ esm: true }),
       external,
     },
     output: {
@@ -35,12 +39,9 @@ const rollupConfig = [
   },
   {
     input: {
-      input: 'src/index.tsx',
-      plugins: getRollupPlugins(),
-      external: [
-        'qrcanvas',
-        'react',
-      ],
+      input: 'src/index.ts',
+      plugins: getRollupPlugins({ esm: true }),
+      external: ['qrcanvas', 'react'],
     },
     output: {
       format: 'iife',
@@ -50,6 +51,7 @@ const rollupConfig = [
         qrcanvas: 'qrcanvas',
         react: 'React',
       },
+      ...bundleOptions,
     },
     minify: true,
   },
@@ -62,13 +64,7 @@ rollupConfig.filter(({ minify }) => minify)
       ...config.input,
       plugins: [
         ...config.input.plugins,
-        uglify({
-          output: {
-            ...BANNER && {
-              preamble: BANNER,
-            },
-          },
-        }),
+        terser(),
       ],
     },
     output: {
@@ -81,6 +77,8 @@ rollupConfig.filter(({ minify }) => minify)
 rollupConfig.forEach((item) => {
   item.output = {
     indent: false,
+    // If set to false, circular dependencies and live bindings for external imports won't work
+    externalLiveBindings: false,
     ...item.output,
     ...BANNER && {
       banner: BANNER,

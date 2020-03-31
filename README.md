@@ -1,5 +1,4 @@
-qrcanvas-react
-===
+# qrcanvas-react
 
 ![NPM](https://img.shields.io/npm/v/qrcanvas-react.svg)
 ![License](https://img.shields.io/npm/l/qrcanvas-react.svg)
@@ -7,17 +6,15 @@ qrcanvas-react
 
 This a QRCode component for use with ReactJS, based on [qrcanvas](https://github.com/gera2ld/qrcanvas).
 
-Install
----
+## Installation
 
 ``` sh
 $ yarn add qrcanvas-react
 ```
 
-Usage
----
+## Usage
 
-``` javascript
+```javascript
 import { QRCanvas } from 'qrcanvas-react';
 import ReactDOM from 'react-dom';
 
